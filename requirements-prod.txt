@@ -1,0 +1,14 @@
+# Runtime dependencies for the FastAPI serving image only.
+# Deliberately excludes CI/dev-only packages from requirements.txt (dvc, pytest, locust,
+# deepchecks + its fasttext/category-encoders deps, pandas, scikit-learn, datasets) —
+# none of those are imported by app/main.py or app/utils.py, and fasttext in particular
+# fails to build inside python:3.12-slim (needs a C++17 compiler not present in the image).
+
+transformers>=4.40.2
+torch>=2.4.0
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+pydantic==2.7.1
+python-dotenv==1.0.1
+mlflow==2.16.2
+prometheus-client==0.20.0
