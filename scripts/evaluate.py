@@ -12,10 +12,14 @@ Run:
 from transformers import pipeline
 
 import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import mlflow
 import mlflow.transformers
 import pandas as pd
+from app.utils import _patch_model_config
 from dotenv import load_dotenv
 from sklearn.metrics import (
     accuracy_score,
@@ -35,6 +39,7 @@ def load_test_data(test_path: str) -> tuple[list[str], list[str]]:
 
 def build_classifier(model_id: str):
     print(f"Loading {model_id}...")
+    _patch_model_config(model_id)
     return pipeline(
         "text-classification",
         model=model_id,
